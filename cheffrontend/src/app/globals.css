@@ -1,26 +1,45 @@
+/* 1️⃣ Load Tailwind core */
 @import "tailwindcss";
 
+/* 2️⃣ Base light theme variables */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --background: #ffffff;
+    --foreground: #171717;
 }
 
+/* 3️⃣ Tailwind v4 inline theme connection (keeps system vars synced) */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --font-sans: var(--font-geist-sans);
+    --font-mono: var(--font-geist-mono);
 }
 
+/* 4️⃣ Dark mode overrides */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+    :root {
+        --background: #0a0a0a;
+        --foreground: #ededed;
+    }
 }
 
+/* 5️⃣ Global body defaults */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* 6️⃣ Your custom brand color palette */
+@theme {
+        --color-battleship: #929487; /* mid-gray */
+        --color-ash: #A1B0AB;        /* light gray */
+        --color-tea: #C3DAC3;        /* soft green */
+        --color-nyanza: #D5ECD4;     /* lighter green */
+        --color-lapis: #2D5D7B;      /* deep blue (brand) */
+}
+
+/* 7️⃣ Global border radius for consistency */
+:root {
+    --radius: 0.75rem;
 }
