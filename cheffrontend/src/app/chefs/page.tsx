@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getChefs, type Chef } from "@/lib/api";
+import { getChefs, type ChefSummary } from "@/lib/api";
 import ChefCard from "../components/ChefCard";
 import PlaceholderImage from "../components/PlaceholderImage";
 
 export default function ChefsPage() {
-    const [chefs, setChefs] = useState<Chef[]>([]);
+    const [chefs, setChefs] = useState<ChefSummary[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
