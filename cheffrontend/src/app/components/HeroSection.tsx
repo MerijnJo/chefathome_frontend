@@ -12,7 +12,7 @@ export default function HeroSection() {
                     </h1>
 
                     <p className="text-nyanza/90 text-base md:text-lg leading-relaxed max-w-prose">
-                        Ervaar de luxe van een privéchef zonder je deur uit te gaan. Met
+                        Ervaar de luxe van een privéchef zonder je deur uit te gaan, want met
                         <strong> Chef Aan Huis</strong> geniet je van een volledig verzorgd diner.
                     </p>
 

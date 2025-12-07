@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 type Chef = {
     id: number;
     name: string;
@@ -13,9 +15,11 @@ export default function ChefCard({ chef }: { chef: Chef }) {
     return (
         <div className="bg-nyanza/5 border border-nyanza/10 rounded-xl p-4 hover:bg-nyanza/10 transition">
             <div className="flex items-center gap-4">
-                <img
+                <Image
                     src={avatarUrl || "/placeholder-chef.png"}
                     alt={name}
+                    width={64}
+                    height={64}
                     className="h-16 w-16 rounded-lg object-cover ring-1 ring-nyanza/20"
                 />
                 <div>

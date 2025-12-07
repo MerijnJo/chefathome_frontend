@@ -16,8 +16,8 @@ export default function ChefsPage() {
             const data = await getChefs();
             setChefs(data);
             setError(null);
-        } catch (e: any) {
-            setError(e.message ?? "Kon chefs niet laden");
+        } catch (e: unknown) {
+            setError(e instanceof Error ? e.message : "Kon chefs niet laden");
         } finally {
             setLoading(false);
         }
