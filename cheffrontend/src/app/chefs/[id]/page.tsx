@@ -36,45 +36,46 @@ export default function ChefDetailPage() {
     }, [params.id]);
 
     return (
-        <main className="min-h-screen bg-gradient-to-b from-lapis to-battleship text-nyanza">
-            <div className="max-w-7xl mx-auto px-6 md:px-10 py-12">
-                {/* Back button */}
+        <main className="min-h-screen bg-white">
+            {/* Back button */}
+            <div className="max-w-7xl mx-auto px-6 md:px-10 py-6">
                 <button
                     onClick={() => router.back()}
-                    className="mb-6 flex items-center gap-2 text-nyanza/80 hover:text-nyanza transition"
+                    className="flex items-center gap-2 text-lapis hover:text-lapis/80 transition"
                 >
                     <span>←</span>
                     <span>Terug naar overzicht</span>
                 </button>
+            </div>
 
-                {/* Loading state */}
-                {loading && (
-                    <div className="bg-nyanza/5 border border-nyanza/10 rounded-xl p-8">
-                        <div className="animate-pulse space-y-4">
-                            <div className="h-32 bg-nyanza/10 rounded-lg w-32"></div>
-                            <div className="h-8 bg-nyanza/10 rounded w-1/3"></div>
-                            <div className="h-4 bg-nyanza/10 rounded w-1/2"></div>
-                            <div className="h-4 bg-nyanza/10 rounded w-2/3"></div>
-                        </div>
+            {/* Loading state */}
+            {loading && (
+                <div className="max-w-7xl mx-auto px-6 md:px-10 py-12">
+                    <div className="animate-pulse space-y-8">
+                        <div className="h-96 bg-ash/20 rounded-lg"></div>
+                        <div className="h-64 bg-ash/20 rounded-lg"></div>
+                        <div className="h-48 bg-ash/20 rounded-lg"></div>
                     </div>
-                )}
+                </div>
+            )}
 
-                {/* Error state */}
-                {error && !loading && (
-                    <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-6">
-                        <p className="text-red-400">{error}</p>
+            {/* Error state */}
+            {error && !loading && (
+                <div className="max-w-7xl mx-auto px-6 md:px-10 py-12">
+                    <div className="bg-red-50 border border-red-200 rounded-xl p-6">
+                        <p className="text-red-600">{error}</p>
                         <button
                             onClick={() => router.push("/chefs")}
-                            className="mt-4 text-sm text-nyanza hover:underline"
+                            className="mt-4 text-sm text-lapis hover:underline"
                         >
                             Ga terug naar chef overzicht
                         </button>
                     </div>
-                )}
+                </div>
+            )}
 
-                {/* Chef detail content */}
-                {!loading && !error && chef && <ChefDetail chef={chef} />}
-            </div>
+            {/* Chef detail content */}
+            {!loading && !error && chef && <ChefDetail chef={chef} />}
         </main>
     );
 }
