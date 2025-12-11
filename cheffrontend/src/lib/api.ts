@@ -53,8 +53,30 @@ function getFetchOptions(): RequestInit {
     };
 }
 
-export async function getChefs(): Promise<ChefSummary[]> {
-    const url = `${API_URL}/api/chefs`;
+export interface ChefFilterParams {
+    foodOrigin?: string;
+    expertise?: string;
+    minExperience?: number;
+    maxExperience?: number;
+    minBasePrice?: number;
+    maxBasePrice?: number;
+}
+
+export async function getChefs(filters?: ChefFilterParams): Promise<ChefSummary[]> {
+    // Build query parameters
+    const params = new URLSearchParams();
+
+    if (filters) {
+        if (filters.foodOrigin) params.append('foodOrigin', filters.foodOrigin);
+        if (filters.expertise) params.append('expertise', filters.expertise);
+        if (filters.minExperience !== undefined) params.append('minExperience', filters.minExperience.toString());
+        if (filters.maxExperience !== undefined) params.append('maxExperience', filters.maxExperience.toString());
+        if (filters.minBasePrice !== undefined) params.append('minBasePrice', filters.minBasePrice.toString());
+        if (filters.maxBasePrice !== undefined) params.append('maxBasePrice', filters.maxBasePrice.toString());
+    }
+
+    const queryString = params.toString();
+    const url = `${API_URL}/api/chefs${queryString ? `?${queryString}` : ''}`;
     console.log('Fetching chefs from:', url);
 
     try {
