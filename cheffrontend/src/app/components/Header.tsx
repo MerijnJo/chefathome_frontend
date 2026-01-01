@@ -37,6 +37,9 @@ export default function Header() {
                     <Link href="/register" className="hover:text-battleship transition">
                         Register
                     </Link>
+                    <Link href="/login" className="hover:text-battleship transition">
+                        Login
+                    </Link>
                     <Link href="/chefs" className="hover:text-battleship transition">
                         Chefs
                     </Link>

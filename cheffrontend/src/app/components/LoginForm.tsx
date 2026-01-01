@@ -2,14 +2,16 @@
 
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import { registerUser } from '@/services/authService';
+import { loginUser } from '@/services/authService';
+import { useUser } from '@/contexts/UserContext';
+import Link from 'next/link';
 
-export default function RegisterForm() {
+export default function LoginForm() {
     const router = useRouter();
+    const { login } = useUser();
 
     const [formData, setFormData] = useState({
         email: '',
-        username: '',
         password: '',
     });
 
@@ -20,7 +22,6 @@ export default function RegisterForm() {
 
     const [validationErrors, setValidationErrors] = useState({
         email: '',
-        username: '',
         password: '',
     });
 
@@ -32,23 +33,19 @@ export default function RegisterForm() {
     };
 
     const validateForm = (): boolean => {
-        const errors = { email: '', username: '', password: '' };
+        const errors = { email: '', password: '' };
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(formData.email)) {
             errors.email = 'Please enter a valid email address';
         }
 
-        if (formData.username.trim().length === 0) {
-            errors.username = 'Username is required';
-        }
-
-        if (formData.password.length < 8) {
-            errors.password = 'Password must be at least 8 characters';
+        if (formData.password.trim().length === 0) {
+            errors.password = 'Password is required';
         }
 
         setValidationErrors(errors);
-        return !errors.email && !errors.username && !errors.password;
+        return !errors.email && !errors.password;
     };
 
     const handleSubmit = async (e: FormEvent) => {
@@ -60,14 +57,15 @@ export default function RegisterForm() {
         setError('');
 
         try {
-            await registerUser(formData);
+            const userData = await loginUser(formData);
+            login(userData);
             setSuccess(true);
 
             setTimeout(() => {
-                router.push('/login');
+                router.push('/');
             }, 2000);
         } catch (err: unknown) {
-            const errorMessage = err instanceof Error ? err.message : 'Registration failed. Please try again.';
+            const errorMessage = err instanceof Error ? err.message : 'Login failed. Please try again.';
             setError(errorMessage);
             setLoading(false);
         }
@@ -80,7 +78,7 @@ export default function RegisterForm() {
                 className="w-full max-w-md bg-white/80 border border-gray-200 rounded-xl p-8 shadow-lg"
             >
                 <h2 className="text-3xl font-semibold text-[#2D5D7B] text-center mb-8">
-                    Create Account
+                    Sign In
                 </h2>
 
                 {error && (
@@ -91,7 +89,7 @@ export default function RegisterForm() {
 
                 {success && (
                     <div className="bg-green-500/10 border border-green-500/20 text-green-500 rounded-lg p-3 mb-6 text-sm">
-                        Registration successful! Redirecting to login...
+                        Login successful! Redirecting...
                     </div>
                 )}
 
@@ -119,30 +117,6 @@ export default function RegisterForm() {
                     )}
                 </div>
 
-                <div className="mb-5">
-                    <label htmlFor="username" className="block text-[#2D5D7B] font-medium mb-2">
-                        Username
-                    </label>
-                    <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        value={formData.username}
-                        onChange={handleChange}
-                        disabled={loading || success}
-                        required
-                        className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg
-                                   text-gray-800 placeholder-gray-400 focus:outline-none
-                                   focus:border-[#2D5D7B] focus:ring-1 focus:ring-[#2D5D7B]
-                                   disabled:opacity-50 disabled:cursor-not-allowed"
-                    />
-                    {validationErrors.username && (
-                        <span className="block text-red-500 text-xs mt-1">
-                            {validationErrors.username}
-                        </span>
-                    )}
-                </div>
-
                 <div className="mb-6">
                     <label htmlFor="password" className="block text-[#2D5D7B] font-medium mb-2">
                         Password
@@ -155,7 +129,7 @@ export default function RegisterForm() {
                             value={formData.password}
                             onChange={handleChange}
                             disabled={loading || success}
-                            autoComplete="new-password"
+                            autoComplete="current-password"
                             required
                             className="w-full px-4 py-3 pr-12 bg-white border border-gray-300 rounded-lg
                                        text-gray-800 placeholder-gray-400 focus:outline-none
@@ -208,8 +182,15 @@ export default function RegisterForm() {
                                hover:bg-[#C3DAC3] transition disabled:opacity-50
                                disabled:cursor-not-allowed text-lg border-2 border-[#2D5D7B]/20"
                 >
-                    {loading ? 'Creating Account...' : 'Register'}
+                    {loading ? 'Signing in...' : 'Sign In'}
                 </button>
+
+                <div className="mt-4 text-center">
+                    <span className="text-gray-600 text-sm">Don't have an account? </span>
+                    <Link href="/register" className="text-[#2D5D7B] text-sm font-medium hover:underline">
+                        Register here
+                    </Link>
+                </div>
             </form>
         </div>
     );

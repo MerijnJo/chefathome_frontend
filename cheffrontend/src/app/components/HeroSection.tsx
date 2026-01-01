@@ -26,36 +26,36 @@ export default function HeroSection() {
                     </Link>
                 </div>
 
-                {/* Right: Sign-in card */}
-                <div className="flex justify-center">
-                    <div className="bg-nyanza text-lapis rounded-[var(--radius)] shadow-xl
-                          p-4 md:p-5 w-full max-w-sm ring-1 ring-ash/30">
-                        <h2 className="text-lg md:text-xl font-semibold mb-3 text-center">Sign In</h2>
-                        <form className="flex flex-col gap-2.5">
-                            <input
-                                type="email"
-                                placeholder="Email"
-                                className="border border-battleship/50 text-battleship placeholder-ash/80
-                           rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lapis/40"
-                            />
-                            <input
-                                type="password"
-                                placeholder="Password"
-                                className="border border-battleship/50 text-battleship placeholder-ash/80
-                           rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lapis/40"
-                            />
-                            <button
-                                type="submit"
-                                className="bg-lapis text-nyanza rounded-md py-2 hover:bg-battleship transition"
-                            >
-                                Sign In
-                            </button>
-                            <a href="#" className="text-xs md:text-sm text-lapis hover:underline text-center">
-                                Forgot password?
-                            </a>
-                        </form>
-                    </div>
-                </div>
+                {/*/!* Right: Sign-in card *!/*/}
+                {/*<div className="flex justify-center">*/}
+                {/*    <div className="bg-nyanza text-lapis rounded-[var(--radius)] shadow-xl*/}
+                {/*          p-4 md:p-5 w-full max-w-sm ring-1 ring-ash/30">*/}
+                {/*        <h2 className="text-lg md:text-xl font-semibold mb-3 text-center">Sign In</h2>*/}
+                {/*        <form className="flex flex-col gap-2.5">*/}
+                {/*            <input*/}
+                {/*                type="email"*/}
+                {/*                placeholder="Email"*/}
+                {/*                className="border border-battleship/50 text-battleship placeholder-ash/80*/}
+                {/*           rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lapis/40"*/}
+                {/*            />*/}
+                {/*            <input*/}
+                {/*                type="password"*/}
+                {/*                placeholder="Password"*/}
+                {/*                className="border border-battleship/50 text-battleship placeholder-ash/80*/}
+                {/*           rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-lapis/40"*/}
+                {/*            />*/}
+                {/*            <button*/}
+                {/*                type="submit"*/}
+                {/*                className="bg-lapis text-nyanza rounded-md py-2 hover:bg-battleship transition"*/}
+                {/*            >*/}
+                {/*                Sign In*/}
+                {/*            </button>*/}
+                {/*            <a href="#" className="text-xs md:text-sm text-lapis hover:underline text-center">*/}
+                {/*                Forgot password?*/}
+                {/*            </a>*/}
+                {/*        </form>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
             </div>
         </section>
     );
