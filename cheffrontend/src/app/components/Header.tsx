@@ -43,12 +43,6 @@ export default function Header() {
                     <Link href="/chefs" className="hover:text-battleship transition">
                         Chefs
                     </Link>
-                    <Link href="/about" className="hover:text-battleship transition">
-                        About
-                    </Link>
-                    <Link href="/contact" className="hover:text-battleship transition">
-                        Contact
-                    </Link>
                 </div>
 
                 {/* Mobile menu button */}
