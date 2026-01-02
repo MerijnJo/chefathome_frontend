@@ -29,7 +29,6 @@ export default function ChefsPage() {
     }, []);
 
     const handleApplyFilters = (filters: ChefFilters) => {
-        // Convert string values to appropriate types
         const apiFilters: ChefFilterParams = {
             foodOrigin: filters.foodOrigin || undefined,
             expertise: filters.expertise || undefined,
@@ -47,53 +46,61 @@ export default function ChefsPage() {
     };
 
     return (
-        <main className="min-h-screen bg-gradient-to-b from-lapis to-battleship text-nyanza flex flex-col">
-            <div className="flex-grow max-w-7xl mx-auto px-6 md:px-10 py-20">
+        <main className="min-h-screen bg-gradient-to-b from-lapis to-battleship text-nyanza">
+            <div className="max-w-7xl mx-auto px-6 md:px-10 py-20">
                 <h1 className="text-4xl md:text-5xl font-bold mb-6">Onze Chefs</h1>
                 <p className="text-nyanza/90 max-w-prose mb-8">
                     Hier vind je alle chefs, geladen vanuit onze database.
                     Je kunt filteren op stijl, locatie en beschikbaarheid.
                 </p>
 
-                {/* Filter Component */}
-                <ChefFiltersComponent
-                    onApplyFilters={handleApplyFilters}
-                    onClearFilters={handleClearFilters}
-                    isLoading={loading}
-                />
+                {/* Sidebar Layout */}
+                <div className="flex gap-6 items-start">
+                    {/* Sidebar Filters - Fixed width, stays on left */}
+                    <aside className="w-64 flex-shrink-0 sticky top-20">
+                        <ChefFiltersComponent
+                            onApplyFilters={handleApplyFilters}
+                            onClearFilters={handleClearFilters}
+                            isLoading={loading}
+                        />
+                    </aside>
 
-                <div className="rounded-[var(--radius)] border border-nyanza/20 p-6 text-nyanza/80">
-                    <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-2xl font-semibold">Chef lijst</h2>
+                    {/* Main Content - Takes remaining space */}
+                    <div className="flex-1 min-w-0">
+                        <div className="rounded-[var(--radius)] border border-nyanza/20 p-6 text-nyanza/80">
+                            <div className="flex items-center justify-between mb-4">
+                                <h2 className="text-2xl font-semibold">Chef lijst</h2>
+                            </div>
+
+                            {/* Loading */}
+                            {loading && (
+                                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                                    {[...Array(6)].map((_, i) => (
+                                        <PlaceholderImage key={i} />
+                                    ))}
+                                </div>
+                            )}
+
+                            {/* Error */}
+                            {error && !loading && (
+                                <p className="text-red-400">{error}</p>
+                            )}
+
+                            {/* Empty state */}
+                            {!loading && !error && chefs.length === 0 && (
+                                <p>Er zijn nog geen chefs.</p>
+                            )}
+
+                            {/* Cards grid */}
+                            {!loading && !error && chefs.length > 0 && (
+                                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                                    {chefs.map((c) => (
+                                        <ChefCard key={c.id} chef={c} />
+                                    ))}
+                                </div>
+                            )}
+                        </div>
                     </div>
-
-                    {/* Loading */}
-                    {loading && (
-                        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                            {[...Array(6)].map((_, i) => (
-                                <PlaceholderImage key={i} />
-                            ))}
-                        </div>
-                    )}
-
-                    {/* Error */}
-                    {error && !loading && (
-                        <p className="text-red-400">{error}</p>
-                    )}
-
-                    {/* Empty state */}
-                    {!loading && !error && chefs.length === 0 && (
-                        <p>Er zijn nog geen chefs.</p>
-                    )}
-
-                    {/* Cards grid */}
-                    {!loading && !error && chefs.length > 0 && (
-                        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                            {chefs.map((c) => (
-                                <ChefCard key={c.id} chef={c} />
-                            ))}
-                        </div>
-                    )}
                 </div>
             </div>
         </main>
