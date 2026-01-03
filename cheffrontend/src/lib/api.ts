@@ -1,28 +1,28 @@
 // Summary data for chef cards in list view
 export interface ChefSummary {
-  id: number;
-  name: string;
-  profilePicture: string;  // URL/path to image
-  experience: number;       // years of experience
-  foodOrigin: string;      // e.g., "Italian", "French"
-  expertise: string;       // e.g., "Mediterranean cuisine"
-  basePrice: number;       // base price per person
+    id: number;
+    name: string;
+    profilePicture: string;  // URL/path to image
+    experience: number;       // years of experience
+    foodOrigin: string;      // e.g., "Italian", "French"
+    expertise: string;       // e.g., "Mediterranean cuisine"
+    basePrice: number;       // base price per person
 }
 
 // Detailed data for individual chef page
 export interface ChefDetail {
-  id: number;
-  name: string;
-  profilePicture: string;
-  experience: number;
-  foodOrigin: string;
-  expertise: string;
-  basePrice: number;
-  about: string;                    // longer description
-  specialties: string[];            // 1-5 items
-  setMenus: string[];              // 1-5 items
-  dishGallery: string[];           // 1-5 image URLs
-  extraInformation: string;
+    id: number;
+    name: string;
+    profilePicture: string;
+    experience: number;
+    foodOrigin: string;
+    expertise: string;
+    basePrice: number;
+    about: string;                    // longer description
+    specialties: string[];            // 1-5 items
+    setMenus: string[];              // 1-5 items
+    dishGallery: string[];           // 1-5 image URLs
+    extraInformation: string;
 }
 
 // Legacy type for backward compatibility
@@ -60,6 +60,7 @@ export interface ChefFilterParams {
     maxExperience?: number;
     minBasePrice?: number;
     maxBasePrice?: number;
+    sortBy?: 'mostViewed';  // NEW: Added sorting parameter
 }
 
 export async function getChefs(filters?: ChefFilterParams): Promise<ChefSummary[]> {
@@ -73,6 +74,7 @@ export async function getChefs(filters?: ChefFilterParams): Promise<ChefSummary[
         if (filters.maxExperience !== undefined) params.append('maxExperience', filters.maxExperience.toString());
         if (filters.minBasePrice !== undefined) params.append('minBasePrice', filters.minBasePrice.toString());
         if (filters.maxBasePrice !== undefined) params.append('maxBasePrice', filters.maxBasePrice.toString());
+        if (filters.sortBy) params.append('sortBy', filters.sortBy);  // NEW: Add sorting parameter
     }
 
     const queryString = params.toString();

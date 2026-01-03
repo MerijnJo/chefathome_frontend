@@ -6,10 +6,14 @@ import ChefCard from "../components/ChefCard";
 import PlaceholderImage from "../components/PlaceholderImage";
 import ChefFiltersComponent, { type ChefFilters } from "../components/ChefFilters";
 
+type ViewMode = 'filtered' | 'mostViewed';
+
 export default function ChefsPage() {
     const [chefs, setChefs] = useState<ChefSummary[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [viewMode, setViewMode] = useState<ViewMode>('filtered');
+    const [activeFilters, setActiveFilters] = useState<ChefFilterParams>({});
 
     async function reload(filters?: ChefFilterParams) {
         try {
@@ -38,11 +42,25 @@ export default function ChefsPage() {
             maxBasePrice: filters.maxBasePrice ? parseInt(filters.maxBasePrice) : undefined,
         };
 
+        setActiveFilters(apiFilters);
+        setViewMode('filtered');
         void reload(apiFilters);
     };
 
     const handleClearFilters = () => {
+        setActiveFilters({});
+        setViewMode('filtered');
         void reload();
+    };
+
+    const handleShowMostViewed = () => {
+        setViewMode('mostViewed');
+        void reload({ sortBy: 'mostViewed' });
+    };
+
+    const handleShowAll = () => {
+        setViewMode('filtered');
+        void reload(activeFilters);
     };
 
     return (
@@ -68,8 +86,34 @@ export default function ChefsPage() {
                     {/* Main Content - Takes remaining space */}
                     <div className="flex-1 min-w-0">
                         <div className="rounded-[var(--radius)] border border-nyanza/20 p-6 text-nyanza/80">
-                            <div className="flex items-center justify-between mb-4">
+                            <div className="flex items-center justify-between mb-6">
                                 <h2 className="text-2xl font-semibold">Chef lijst</h2>
+
+                                {/* View Mode Toggle Buttons */}
+                                <div className="flex gap-2">
+                                    <button
+                                        onClick={handleShowAll}
+                                        disabled={loading}
+                                        className={`px-4 py-2 text-sm font-medium rounded transition ${
+                                            viewMode === 'filtered'
+                                                ? 'bg-nyanza text-lapis'
+                                                : 'bg-white/10 text-nyanza hover:bg-white/20'
+                                        } disabled:opacity-50 disabled:cursor-not-allowed`}
+                                    >
+                                        Alle Chefs
+                                    </button>
+                                    <button
+                                        onClick={handleShowMostViewed}
+                                        disabled={loading}
+                                        className={`px-4 py-2 text-sm font-medium rounded transition flex items-center gap-2 ${
+                                            viewMode === 'mostViewed'
+                                                ? 'bg-nyanza text-lapis'
+                                                : 'bg-white/10 text-nyanza hover:bg-white/20'
+                                        } disabled:opacity-50 disabled:cursor-not-allowed`}
+                                    >
+                                        <span>Meest Bekeken</span>
+                                    </button>
+                                </div>
                             </div>
 
                             {/* Loading */}
