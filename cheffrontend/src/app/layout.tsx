@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: "Chef At Home",
-    description: "Chef At Home - Hire Professional Chefs for In-Home Dining Experiences",
+    title: "Chef.ts At Home",
+    description: "Chef.ts At Home - Hire Professional Chefs for In-Home Dining Experiences",
 };
 
 export default function RootLayout({

@@ -113,7 +113,7 @@ export const EXAMPLE_JAPANESE_CHEF = {
     "Traditional Miso Soup"
   ],
   "setMenus": [
-    "Sushi Omakase: Chef's Selection of 12 Pieces Nigiri, Maki Rolls, Miso Soup - €90 pp"
+    "Sushi Omakase: Chef.ts's Selection of 12 Pieces Nigiri, Maki Rolls, Miso Soup - €90 pp"
   ],
   "dishGallery": [
     "/images/dishes/sushi1.jpg",

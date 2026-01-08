@@ -52,7 +52,7 @@ export default function ChefDetail({ chef }: { chef: ChefDetailType }) {
             {/* Hero Section - Split Layout with Container */}
             <div className="max-w-7xl mx-auto">
                 <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[500px]">
-                    {/* Left: Chef Info */}
+                    {/* Left: Chef.ts Info */}
                     <div className="p-8 lg:p-12 flex flex-col justify-center">
                         <h1 className="text-4xl lg:text-5xl font-bold text-lapis mb-4">{name}</h1>
                         <p className="text-battleship leading-relaxed mb-6">
@@ -149,7 +149,7 @@ export default function ChefDetail({ chef }: { chef: ChefDetailType }) {
             </div>
             </div>
 
-            {/* Chef's Specialties */}
+            {/* Chef.ts's Specialties */}
             {specialties && specialties.length > 0 && (
                 <div className="max-w-7xl mx-auto border-t border-ash/20">
                     <div className="p-8 lg:p-12">
@@ -257,7 +257,7 @@ export default function ChefDetail({ chef }: { chef: ChefDetailType }) {
                         </div>
                     </div>
 
-                    {/* Right: Chef's Availability */}
+                    {/* Right: Chef.ts's Availability */}
                     <div className="p-8 lg:p-12 bg-white lg:border-l border-ash/20">
                         <h2 className="text-3xl font-bold text-lapis mb-6">Chef&apos;s Availability</h2>
                         <p className="text-battleship leading-relaxed mb-8">

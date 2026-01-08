@@ -74,7 +74,7 @@ export default function ChefDetailPage() {
                 </div>
             )}
 
-            {/* Chef detail content */}
+            {/* Chef.ts detail content */}
             {!loading && !error && chef && <ChefDetail chef={chef} />}
         </main>
     );
