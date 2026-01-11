@@ -1,16 +1,15 @@
 import path from 'path';
 import { defineConfig, devices } from '@playwright/test';
 
-const isCI = !!process.env.CI;
-
+// Always start the dev server in frontend CI and local
 export default defineConfig({
     testDir: './tests/e2e',
     timeout: 30 * 1000,
     expect: { timeout: 5000 },
     fullyParallel: true,
-    forbidOnly: isCI,
-    retries: isCI ? 2 : 0,
-    workers: isCI ? 1 : undefined,
+    forbidOnly: !!process.env.CI,
+    retries: process.env.CI ? 2 : 0,
+    workers: process.env.CI ? 1 : undefined,
     reporter: [['list'], ['html', { outputFolder: 'playwright-report' }]],
     use: {
         baseURL: process.env.PLAYWRIGHT_TEST_BASE_URL || 'http://localhost:3001',
@@ -21,14 +20,11 @@ export default defineConfig({
     projects: [
         { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
     ],
-    // Only start the dev server locally, not in CI
-    ...(isCI ? {} : {
-        webServer: {
-            command: 'npm run dev',
-            cwd: path.resolve(__dirname), // or path.resolve(__dirname, 'cheffrontend') if running from infra root
-            url: process.env.PLAYWRIGHT_TEST_BASE_URL || 'http://localhost:3001',
-            timeout: 120 * 1000,
-            reuseExistingServer: true,
-        }
-    }),
+    webServer: {
+        command: 'npm run dev',
+        cwd: path.resolve(__dirname),
+        url: process.env.PLAYWRIGHT_TEST_BASE_URL || 'http://localhost:3001',
+        timeout: 120 * 1000,
+        reuseExistingServer: true,
+    },
 });
