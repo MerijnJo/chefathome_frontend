@@ -35,6 +35,8 @@ jobs:
         run: npm run lint
 
       - name: Build
+        env:
+          NEXT_PUBLIC_API_BASE_URL: http://localhost:8080
         run: npm run build
 
       - name: Install Playwright Browsers
@@ -42,8 +44,7 @@ jobs:
 
       - name: Start mock backend
         run: |
-          chmod +x tests/e2e/mock-backend.js || true
-          nohup node tests/e2e/mock-backend.js > mock-backend.log 2>&1 &
+          nohup node tests/e2e/mock-backend.mjs > mock-backend.log 2>&1 &
           echo $! > mock-backend.pid
 
       - name: Wait for backend to be ready

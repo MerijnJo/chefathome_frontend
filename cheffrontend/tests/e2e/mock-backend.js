@@ -1,4 +1,3 @@
-// File: `cheffrontend/tests/e2e/mock-backend.mjs`
 import http from 'http';
 import { URL } from 'url';
 
