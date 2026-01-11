@@ -1,3 +1,4 @@
+// File: cheffrontend/tests/e2e/mock-backend.mjs
 import http from "http";
 import { URL } from "url";
 
@@ -50,7 +51,7 @@ const server = http.createServer((req, res) => {
             return;
         }
 
-        // simple placeholder for websocket path used by frontend hook
+        // placeholder for websocket paths used by frontend hook
         if (url.pathname === "/ws" || url.pathname.startsWith("/sockjs")) {
             res.writeHead(200, { "Content-Type": "text/plain" });
             return res.end("mock backend: no websocket support in this mock");
