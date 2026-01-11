@@ -40,6 +40,15 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium
 
+      - name: Start mock backend
+        run: |
+          chmod +x tests/e2e/mock-backend.js || true
+          nohup node tests/e2e/mock-backend.js > mock-backend.log 2>&1 &
+          echo $! > mock-backend.pid
+
+      - name: Wait for backend to be ready
+        run: npx wait-on http://localhost:8080/health --timeout 15000
+
       - name: Run E2E Tests
         env:
           PLAYWRIGHT_TEST_BASE_URL: http://localhost:3001
