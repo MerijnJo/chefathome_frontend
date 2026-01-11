@@ -1,7 +1,8 @@
 import path from 'path';
 import { defineConfig, devices } from '@playwright/test';
 
-// Always start the dev server in frontend CI and local
+const isInfraCI = !!process.env.IN_INFRA_CI;
+
 export default defineConfig({
     testDir: './tests/e2e',
     timeout: 30 * 1000,
@@ -20,11 +21,14 @@ export default defineConfig({
     projects: [
         { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
     ],
-    webServer: {
-        command: 'npm run dev',
-        cwd: path.resolve(__dirname),
-        url: process.env.PLAYWRIGHT_TEST_BASE_URL || 'http://localhost:3001',
-        timeout: 120 * 1000,
-        reuseExistingServer: true,
-    },
+    // Only start dev server if not in infra CI-CD
+    ...(isInfraCI ? {} : {
+        webServer: {
+            command: 'npm run dev',
+            cwd: path.resolve(__dirname),
+            url: process.env.PLAYWRIGHT_TEST_BASE_URL || 'http://localhost:3001',
+            timeout: 120 * 1000,
+            reuseExistingServer: true,
+        }
+    }),
 });
