@@ -4,6 +4,7 @@
     "sockjs-client": "^1.6.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.57.0",
     "@types/sockjs-client": "^1.5.4"
   }
 }
