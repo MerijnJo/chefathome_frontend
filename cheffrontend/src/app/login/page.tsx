@@ -1,3 +1,4 @@
+// File: `cheffrontend/src/app/login/page.tsx`
 "use client";
 
 import { useState } from "react";
@@ -17,28 +18,28 @@ export default function LoginPage() {
         setIsLoading(true);
 
         try {
-            const response = await fetch('http://localhost:8080/api/users/login', {
-                method: 'POST',
+            const response = await fetch("http://localhost:8080/api/users/login", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ email, password }),
             });
 
             if (!response.ok) {
-                const errorData = await response.json().catch(() => ({ message: 'Login failed' }));
-                throw new Error(errorData.message || 'Login failed');
+                const errorData = await response.json().catch(() => ({ message: "Login failed" }));
+                throw new Error(errorData.message || "Login failed");
             }
 
             const data = await response.json();
 
             if (data.token) {
-                sessionStorage.setItem('token', data.token);
+                sessionStorage.setItem("token", data.token);
             }
 
-            router.push('/profile');
+            router.push("/profile");
         } catch (err) {
-            setError(err instanceof Error ? err.message : 'An error occurred');
+            setError(err instanceof Error ? err.message : "An error occurred");
         } finally {
             setIsLoading(false);
         }
@@ -96,7 +97,7 @@ export default function LoginPage() {
                 </form>
 
                 <p className="mt-6 text-center text-gray-600">
-                    Don't have an account?{" "}
+                    Don&apos;t have an account?{" "}
                     <Link href="/register" className="text-lapis font-medium hover:underline">
                         Register here
                     </Link>

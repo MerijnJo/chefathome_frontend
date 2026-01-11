@@ -3,18 +3,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, X, Trophy } from "lucide-react";
+import { Trophy } from "lucide-react";
 import LeaderboardModal from "./LeaderboardModal";
 
 export default function Header() {
-    const [isOpen, setIsOpen] = useState(false);
     const [isLeaderboardOpen, setIsLeaderboardOpen] = useState(false);
 
     return (
         <>
             <header className="bg-nyanza text-lapis shadow-sm sticky top-0 z-50">
                 <nav className="w-full px-3 md:px-6 py-4 flex justify-between items-center">
-                    {/* Logo */}
                     <Link
                         href="/"
                         className="flex items-center gap-3 hover:opacity-80 transition"
@@ -31,7 +29,6 @@ export default function Header() {
                         </span>
                     </Link>
 
-                    {/* Desktop links */}
                     <div className="hidden md:flex gap-8 font-medium items-center">
                         <Link href="/" className="hover:text-battleship transition">
                             Home
@@ -46,7 +43,6 @@ export default function Header() {
                             Profile
                         </Link>
 
-                        {/* Leaderboard button (desktop) */}
                         <button
                             onClick={() => setIsLeaderboardOpen(true)}
                             className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-semibold rounded-lg shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
@@ -58,9 +54,7 @@ export default function Header() {
                         </button>
                     </div>
 
-                    {/* Mobile buttons */}
                     <div className="md:hidden flex items-center gap-3">
-                        {/* Leaderboard button (mobile) */}
                         <button
                             onClick={() => setIsLeaderboardOpen(true)}
                             className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-yellow-400 to-orange-500 text-white rounded-lg shadow-md hover:shadow-lg transition-all"
@@ -71,11 +65,8 @@ export default function Header() {
                         </button>
                     </div>
                 </nav>
-
-
             </header>
 
-            {/* Leaderboard Modal */}
             <LeaderboardModal
                 isOpen={isLeaderboardOpen}
                 onClose={() => setIsLeaderboardOpen(false)}

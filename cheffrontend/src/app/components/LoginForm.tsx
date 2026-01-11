@@ -1,47 +1,48 @@
-'use client';
+// File: `cheffrontend/src/app/components/LoginForm.tsx`
+"use client";
 
-import { useState, FormEvent } from 'react';
-import { useRouter } from 'next/navigation';
-import { loginUser } from '@/services/authService';
-import { useUser } from '@/contexts/UserContext';
-import Link from 'next/link';
+import { useState, FormEvent } from "react";
+import { useRouter } from "next/navigation";
+import { loginUser } from "@/services/authService";
+import { useUser } from "@/contexts/UserContext";
+import Link from "next/link";
 
 export default function LoginForm() {
     const router = useRouter();
     const { login } = useUser();
 
     const [formData, setFormData] = useState({
-        email: '',
-        password: '',
+        email: "",
+        password: "",
     });
 
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
+    const [error, setError] = useState("");
     const [success, setSuccess] = useState(false);
 
     const [validationErrors, setValidationErrors] = useState({
-        email: '',
-        password: '',
+        email: "",
+        password: "",
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-        setValidationErrors(prev => ({ ...prev, [name]: '' }));
-        setError('');
+        setFormData((prev) => ({ ...prev, [name]: value }));
+        setValidationErrors((prev) => ({ ...prev, [name]: "" }));
+        setError("");
     };
 
     const validateForm = (): boolean => {
-        const errors = { email: '', password: '' };
+        const errors = { email: "", password: "" };
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(formData.email)) {
-            errors.email = 'Please enter a valid email address';
+            errors.email = "Please enter a valid email address";
         }
 
         if (formData.password.trim().length === 0) {
-            errors.password = 'Password is required';
+            errors.password = "Password is required";
         }
 
         setValidationErrors(errors);
@@ -54,7 +55,7 @@ export default function LoginForm() {
         if (!validateForm()) return;
 
         setLoading(true);
-        setError('');
+        setError("");
 
         try {
             const userData = await loginUser(formData);
@@ -62,10 +63,10 @@ export default function LoginForm() {
             setSuccess(true);
 
             setTimeout(() => {
-                router.push('/');
+                router.push("/");
             }, 2000);
         } catch (err: unknown) {
-            const errorMessage = err instanceof Error ? err.message : 'Login failed. Please try again.';
+            const errorMessage = err instanceof Error ? err.message : "Login failed. Please try again.";
             setError(errorMessage);
             setLoading(false);
         }
@@ -123,7 +124,7 @@ export default function LoginForm() {
                     </label>
                     <div className="relative">
                         <input
-                            type={showPassword ? 'text' : 'password'}
+                            type={showPassword ? "text" : "password"}
                             id="password"
                             name="password"
                             value={formData.password}
@@ -142,7 +143,7 @@ export default function LoginForm() {
                             disabled={loading || success}
                             className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500
                                        hover:text-[#2D5D7B] transition disabled:opacity-50"
-                            aria-label={showPassword ? 'Hide password' : 'Show password'}
+                            aria-label={showPassword ? "Hide password" : "Show password"}
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -182,11 +183,11 @@ export default function LoginForm() {
                                hover:bg-[#C3DAC3] transition disabled:opacity-50
                                disabled:cursor-not-allowed text-lg border-2 border-[#2D5D7B]/20"
                 >
-                    {loading ? 'Signing in...' : 'Sign In'}
+                    {loading ? "Signing in..." : "Sign In"}
                 </button>
 
                 <div className="mt-4 text-center">
-                    <span className="text-gray-600 text-sm">Don't have an account? </span>
+                    <span className="text-gray-600 text-sm">Don&apos;t have an account? </span>
                     <Link href="/register" className="text-[#2D5D7B] text-sm font-medium hover:underline">
                         Register here
                     </Link>
