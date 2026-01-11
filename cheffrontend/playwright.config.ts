@@ -21,10 +21,11 @@ export default defineConfig({
     projects: [
         { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
     ],
+    // Only start the dev server locally, not in CI
     ...(isCI ? {} : {
         webServer: {
             command: 'npm run dev',
-            cwd: path.resolve(__dirname),
+            cwd: path.resolve(__dirname), // or path.resolve(__dirname, 'cheffrontend') if running from infra root
             url: process.env.PLAYWRIGHT_TEST_BASE_URL || 'http://localhost:3001',
             timeout: 120 * 1000,
             reuseExistingServer: true,
