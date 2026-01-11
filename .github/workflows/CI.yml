@@ -44,11 +44,37 @@ jobs:
 
       - name: Start mock backend
         run: |
+          chmod +x tests/e2e/mock-backend.mjs || true
           nohup node tests/e2e/mock-backend.mjs > mock-backend.log 2>&1 &
           echo $! > mock-backend.pid
+          sleep 1
+          echo "=== tail mock-backend.log (initial) ==="
+          tail -n 50 mock-backend.log || true
+          echo "=== ps (verify process) ==="
+          ps aux | grep -E 'mock-backend|node' | sed -n '1,200p' || true
 
-      - name: Wait for backend to be ready
-        run: npx wait-on http://localhost:8080/health --timeout 15000
+      - name: Wait for backend to be ready (curl loop with diagnostics)
+        run: |
+          echo "Waiting for http://localhost:8080/health ..."
+          for i in $(seq 1 30); do
+            if curl -sSf http://localhost:8080/health >/dev/null 2>&1; then
+              echo "Backend is ready"
+              exit 0
+            fi
+            echo "Retry $i/30..."
+            sleep 1
+          done
+
+          echo "Timeout waiting for backend. Showing diagnostics:"
+          echo "=== last 200 lines of mock-backend.log ==="
+          tail -n 200 mock-backend.log || true
+          echo "=== ps aux ==="
+          ps aux || true
+          echo "=== listening ports ==="
+          ( ss -lntp || netstat -lntp ) 2>/dev/null || true
+          echo "=== mock-backend.log ==="
+          cat mock-backend.log || true
+          exit 1
 
       - name: Run E2E Tests
         env:
